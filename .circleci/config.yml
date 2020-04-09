@@ -1,0 +1,82 @@
+version: 2.1
+jobs:
+
+  #------------------------------------------------------------
+  # 1. 安装依赖
+  #------------------------------------------------------------
+  install-dependencies:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "yarn.lock" }}
+            - v1-deps
+
+      - run:
+          name: 'Install dependencies'
+          command: yarn --frozen-lockfile --non-interactive
+
+      - save_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - node_modules
+
+  #------------------------------------------------------------
+  # 2. 构建
+  #------------------------------------------------------------
+  build:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: ~/project
+      
+      - run:
+          name: 'Run tests'
+          command: yarn build
+      
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .vuepress/dist
+
+  #------------------------------------------------------------
+  # 3. 部署
+  #------------------------------------------------------------
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - attach_workspace:
+          at: ~/project
+
+      - add_ssh_keys:
+          fingerprints:
+            - "65:b3:e1:50:05:82:37:0a:a5:ae:33:ea:0e:ad:63:c3"
+    
+      - run:
+          name: Deploy Over SSH
+          command: |
+            scp -pr .vuepress/dist/. $SSH_DEPLOY_USER@$SSH_HOST:/data/blog
+
+workflows:
+  build:
+    jobs:
+      - install-dependencies
+      - build:
+          requires:
+            - install-dependencies
+      - deploy:
+          requires:
+            - build
+          context: deploy
