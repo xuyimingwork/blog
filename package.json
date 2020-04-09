@@ -4,6 +4,7 @@
   "repository": "git@github.com:xuyimingwork/blog.git",
   "scripts": {
     "dev": "vuepress dev .",
+    "build": "vuepress build .",
     "commit": "git-cz"
   },
   "devDependencies": {
