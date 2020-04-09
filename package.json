@@ -1,0 +1,19 @@
+{
+  "name": "blog",
+  "version": "0.0.1",
+  "repository": "git@github.com:xuyimingwork/blog.git",
+  "scripts": {
+    "dev": "vuepress dev .",
+    "commit": "git-cz"
+  },
+  "devDependencies": {
+    "commitizen": "^4.0.4",
+    "cz-conventional-changelog": "3.1.0",
+    "vuepress": "^1.4.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
