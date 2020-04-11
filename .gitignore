@@ -4,5 +4,8 @@
 # node 依赖
 node_modules/
 
+# yarn 错误日志
+yarn-error.log
+
 # 构建产物
 .vuepress/dist/
