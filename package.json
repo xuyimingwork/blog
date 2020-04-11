@@ -3,14 +3,21 @@
   "version": "0.0.1",
   "repository": "git@github.com:xuyimingwork/blog.git",
   "scripts": {
+    "c": "npm run create",
+    "create": "npm run new",
+    "n": "npm run new",
+    "new": "node scripts/new-post.js",
     "dev": "vuepress dev .",
     "build": "vuepress build .",
     "commit": "git-cz"
   },
   "devDependencies": {
+    "@vuepress/theme-blog": "^2.2.0",
     "commitizen": "^4.0.4",
     "cz-conventional-changelog": "3.1.0",
-    "vuepress": "^1.4.0"
+    "moment": "^2.24.0",
+    "vuepress": "^1.4.0",
+    "yargs": "^15.3.1"
   },
   "config": {
     "commitizen": {
