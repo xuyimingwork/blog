@@ -16,7 +16,7 @@ tags:
 
 以维度划分，HTML 继承了不同的语言
 
-### 通用计算机语言
+### HTML as 计算机语言
 
 - 语法
 
@@ -24,7 +24,7 @@ tags:
 
 - 词法
 
-### SGML
+### HTML as SGML
 
 > 从 SGML 角度对 HTML 进行定义
 
@@ -34,7 +34,7 @@ tags:
 
   > 注意，在 [HTML 4.01 DTD](https://www.w3.org/TR/REC-html40/sgml/dtd.html#HTMLlat1) 文档的 `Character mnemonic entities` 部分，定义了 Entities
 
-### XML
+### HTML as XML
 
 > html 标签的 `xmlns` 属性，从 XML 角度对 HTML 进行定义
 
@@ -55,9 +55,7 @@ tags:
 
 标准文件 [ECMA-262](http://ecma-international.org/publications/standards/Ecma-262.htm)
 
-
-
-- Grammar
+### Grammar
   - Lex => 262 Lexical Grammar
     - WhiteSpace
     - LineTerminator
@@ -75,8 +73,8 @@ tags:
     - Expression
     - Structure
     - Scripts and Modules
-- Semantics => 同 Syntax 一一对应
-- Runtime
+### Semantics => 同 Syntax 一一对应
+### Runtime
   - Type
     - Number
     - String
@@ -102,6 +100,33 @@ tags:
 ## CSS
 
 - 语法/词法
+- @规则
+  - charset
+  - import
+  - page
+  - counter-style
+  - keyframes
+  - fontface
+  - supports
+  - namespace
+- 普通规则
+  - 选择器 => 标准独立，可在 JavaScript 中使用（querySelector）
+    - 简单选择器
+      - `.class`
+      - `#id`
+      - `tag`
+      - `*`
+      - `[attr=v]`
+    - 复合选择器 => 组合简单选择器，选择器间为 and 关系
+    - 复杂选择器
+    - 选择器列表 => 逗号分隔
+  - 属性
+  - 属性值
+- 机制
+  - 排版
+  - 伪元素
+  - 动画
+  - 优先级
 
 参考文档
 
@@ -109,8 +134,15 @@ tags:
 - [CSS 2](https://www.w3.org/TR/2011/REC-CSS2-20110607/)
   > CSS 3 开始，需要在各模块中找寻 CSS 语法
 
-
-
 ## API
 
 以开发环境划分：Browser、Node、Electron、小程序
+
+### Browser
+
+[web platform api](https://webplatform.github.io/docs/apis/)
+
+- DOM => [whatwg dom specification](https://dom.spec.whatwg.org/)
+  - Node
+  - Event
+  - Range
