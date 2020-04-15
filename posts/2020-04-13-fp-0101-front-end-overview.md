@@ -99,8 +99,8 @@ tags:
 
 ## CSS
 
-- 语法/词法
-- @规则
+### 语法/词法
+### @规则
   - charset
   - import
   - page
@@ -109,7 +109,7 @@ tags:
   - fontface
   - supports
   - namespace
-- 普通规则
+### 普通规则
   - 选择器 => 标准独立，可在 JavaScript 中使用（querySelector）
     - 简单选择器
       - `.class`
@@ -122,7 +122,7 @@ tags:
     - 选择器列表 => 逗号分隔
   - 属性
   - 属性值
-- 机制
+### 机制
   - 排版
   - 伪元素
   - 动画
