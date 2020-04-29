@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "repository": "git@github.com:xuyimingwork/blog.git",
   "scripts": {
-    "c": "npm run create",
-    "create": "npm run new",
-    "n": "npm run new",
+    "c": "yarn run create",
+    "create": "yarn run new",
+    "n": "yarn run new",
     "new": "node scripts/new-post.js",
+    "start": "yarn run dev",
+    "serve": "yarn run dev",
     "dev": "vuepress dev .",
     "build": "vuepress build .",
     "commit": "git-cz"
