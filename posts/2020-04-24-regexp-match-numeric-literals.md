@@ -6,23 +6,6 @@ tags:
   - 字面量
 ---
 
-- [背景](#%e8%83%8c%e6%99%af)
-- [解法](#%e8%a7%a3%e6%b3%95)
-  - [匹配十进制字面量（DecimalLiteral）](#%e5%8c%b9%e9%85%8d%e5%8d%81%e8%bf%9b%e5%88%b6%e5%ad%97%e9%9d%a2%e9%87%8fdecimalliteral)
-    - [匹配 DecimalIntegerLiteral](#%e5%8c%b9%e9%85%8d-decimalintegerliteral)
-      - [小结](#%e5%b0%8f%e7%bb%93)
-    - [匹配 DecimalDigits](#%e5%8c%b9%e9%85%8d-decimaldigits)
-      - [小结](#%e5%b0%8f%e7%bb%93-1)
-    - [匹配 ExponentPart](#%e5%8c%b9%e9%85%8d-exponentpart)
-      - [小结](#%e5%b0%8f%e7%bb%93-2)
-    - [小结](#%e5%b0%8f%e7%bb%93-3)
-  - [匹配二进制整型字面量（BinaryIntegerLiteral）](#%e5%8c%b9%e9%85%8d%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%95%b4%e5%9e%8b%e5%ad%97%e9%9d%a2%e9%87%8fbinaryintegerliteral)
-  - [匹配八进制整型字面量（OctalIntegerLiteral）](#%e5%8c%b9%e9%85%8d%e5%85%ab%e8%bf%9b%e5%88%b6%e6%95%b4%e5%9e%8b%e5%ad%97%e9%9d%a2%e9%87%8foctalintegerliteral)
-  - [匹配十六进制整型字面量（HexIntegerLiteral）](#%e5%8c%b9%e9%85%8d%e5%8d%81%e5%85%ad%e8%bf%9b%e5%88%b6%e6%95%b4%e5%9e%8b%e5%ad%97%e9%9d%a2%e9%87%8fhexintegerliteral)
-  - [答案](#%e7%ad%94%e6%a1%88)
-- [验证](#%e9%aa%8c%e8%af%81)
-- [参见](#%e5%8f%82%e8%a7%81)
-
 ## 背景
 
 写一个能匹配 JavaScript 数字字面量（Numeric Literals）的正则表达式
