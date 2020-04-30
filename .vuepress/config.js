@@ -1,5 +1,5 @@
 module.exports = {
-  title: '学习经验分享',
+  title: '会意',
   theme: '@vuepress/theme-blog',
   themeConfig: {
     dateFormat: 'YYYY-MM-DD',
