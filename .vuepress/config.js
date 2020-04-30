@@ -34,6 +34,7 @@ module.exports = {
       ]
     }
   },
+  evergreen: true,
   markdown: {
     lineNumbers: true
   }
