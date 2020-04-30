@@ -58,6 +58,71 @@ nginx 由模块组成，而模块受配置文件中的指令控制。指令分�
 
 若配置文件中的某个指令不属于任何上下文，则它属于 main 上下文（[main context](http://nginx.org/en/docs/ngx_core_module.html)）。[`events`](http://nginx.org/en/docs/ngx_core_module.html#events) 与 [`http`](http://nginx.org/en/docs/http/ngx_http_core_module.html#http) 指令位于 main 上下文，[`server`](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) 位于 [`http`](http://nginx.org/en/docs/http/ngx_http_core_module.html#http) 上下文，[`location`](http://nginx.org/en/docs/http/ngx_http_core_module.html#location) 位于 [`server`](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) 上下文
 
+使用 `#` 对单行进行注释
+
+### 提供静态内容
+
+实现依据请求，从不同的本地文件夹：`/data/www`（一般用于放置 HTML 文件） 与 `data/images`（一般用于放置图片） 提供文件的功能，需要在配置文件的 http 块的 server 块内配置两个 location 块
+
+默认的配置文件中已经包含了多个 `server` 块的例子，期中绝大部分已经注释，注释掉其它部分，开始一个新的 `server` 配置
+
+```nginx
+http {
+    server {
+    }
+}
+```
+
+通常，配置文件中会包含多个 `server` 块，他们通过监听的 `port` 不同以及不同的 [server names](http://nginx.org/en/docs/beginners_guide.html) 区别。一旦 nginx 确定请求由某个 server 处理，它会将请求头部的 URI 与 `server` 块内 `location` 指令的参数比对。
+
+将下面的 `location` 块添加到 `server`
+
+```nginx
+location / {
+    root /data/www;
+}
+```
+
+该 `location` 块设置了 `/` 前缀，该前缀会与请求的 URL 进行比较。对于匹配的请求，请求的 URL 会被添加到 `root` 指令标明的路径中，此处即添加到 `/data/www`，构成请求文件在本地系统中的路径。
+
+如果有多个匹配的 `location` 块，nginx 会选择拥有最长匹配前缀的 `location`。上述的 `location` 块提供了最短的前缀，长度仅为一，因此只在其它 `location` 块都不匹配时，该块才会被使用。
+
+接着，添加第二个 `location` 块
+
+```nginx
+location /images/ {
+    root /data;
+}
+```
+
+该块会匹配以 `/images/` 打头的请求，最终形成的路径为 `/data/images/`
+
+`server` 块的最终配置如下
+
+```nginx
+server {
+    location / {
+        root /data/www;
+    }
+
+    location /images/ {
+        root /data;
+    }
+}
+```
+
+目前的 server 已经是一个可工作的配置，其监听标准的 `80` 端口并可以在本地机器上通过 `http://localhost/` 访问。对于以 `/images/` 开头的 URI，该服务器会发送 `/data/images` 文件夹下的文件。如 `http://localhost/images/example.png` 的请求会使 nginx 发送 `/data/images/example.png` 文件作为响应。若该文件不存在，nginx 会返回 404 错误的响应。非 `/images/` 开头的请求会匹配到 `/data/www` 文件夹，例如 `http://localhost/some/example.html` 请求会响应 `/data/www/some/example.html` 文件
+
+为应用新配置，若 nginx 未启动，则启动 nginx，若 nginx 已启动，则使用下面命令
+
+```sh
+nginx -s reload
+```
+
+> 若出现错误，可以在 `/usr/local/nginx/logs` 或 `/var/log/nginx` 文件夹的 `access.log` 和 `error.log` 文件中查看原因
+
+
+
 ## 参见
 
 - [关于 nginx](http://nginx.org/en/)
