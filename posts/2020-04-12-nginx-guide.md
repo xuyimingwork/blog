@@ -121,7 +121,45 @@ nginx -s reload
 
 > 若出现错误，可以在 `/usr/local/nginx/logs` 或 `/var/log/nginx` 文件夹的 `access.log` 和 `error.log` 文件中查看原因
 
+### 搭建基础代理服务器
 
+nginx 常用于搭建代理服务器，即服务器接收请求，将这些请求转发到被代理的服务器，从被代理的服务器拿到响应并将其发送回客户端。
+
+下面会配置一个基础代理服务器，为图片请求提供本地文件夹文件并将其它所有请求转发至被代理服务器。在这个例子中，两个服务器会定义在同一个 nginx 实例中
+
+首先，定义被代理服务器。在 nginx 的配置文件添加一个 `server` 块，内容如下：
+
+```nginx
+server {
+    listen 8080;
+    root /data/up1;
+
+    location / {
+    }
+}
+```
+
+上面的配置定义了一个监听 8080 端口的基础服务器（先前的例子中未配置 listen 指令， 则会使用标准的 80 端口）并将所有请求匹配至本地文件系统的 `/data/up1`。创建该文件夹并放一个 `index.html` 文件。注意 root 指令位于 server 上下文中。该 root 在匹配请求的 location 中没有指定 root 时使用。
+
+下一步，配置代理服务器。在首个 location 块中，配置 [`proxy_pass`](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass) 指令，参数为被代理的服务器的协议、名称以及端口（在我们的例子中，为 `http://localhost:8080`）
+
+配置第二个 location 块匹配常见文件拓展名的图片。参数为匹配所有以 `.gif`、`.jpg` 或 `.png` 结尾的 URI 的正则。正则需在 `~` 后。对应的请求会匹配至 `/data/images` 文件夹
+
+```nginx
+server {
+    location / {
+        proxy_pass http://localhost:8080/;
+    }
+
+    location ~ \.(gif|jpg|png)$ {
+        root /data/images;
+    }
+}
+```
+
+当 nginx 选择用于服务请求的 `location` 块时，其先检查静态前缀的 `location` 指令，并标记最长前缀的 `location`，之后，开始检查正则。若有匹配的正则，则使用正则所在的 `location`，否则，使用先前标记的最长前缀的 `location`。
+
+[更多](http://nginx.org/en/docs/http/ngx_http_proxy_module.html)用于进一步配置代理连接的指令
 
 ## 参见
 
