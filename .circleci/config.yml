@@ -67,7 +67,9 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            scp -pr .vuepress/dist/. $SSH_DEPLOY_USER@$SSH_HOST:/data/blog
+            tar -czvf .vuepress/blog.tar.gz --directory=.vuepress dist
+            scp -p .vuepress/blog.tar.gz $SSH_DEPLOY_USER@$SSH_HOST:/data/temp
+            ssh $SSH_DEPLOY_USER@$SSH_HOST "tar -xvf /data/temp/blog.tar.gz --strip-components=1 -C /data/blog/"
 
 workflows:
   build:
@@ -79,4 +81,8 @@ workflows:
       - deploy:
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - master
           context: deploy
