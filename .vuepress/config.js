@@ -32,7 +32,8 @@ module.exports = {
           link: 'http://www.beian.miit.gov.cn',
         },
       ]
-    }
+    },
+    pwa: true
   },
   evergreen: true,
   markdown: {
