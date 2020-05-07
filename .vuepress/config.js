@@ -7,7 +7,7 @@ module.exports = {
     ['meta', { name: 'theme-color', content: '#fff' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }],
-    ['link', { rel: 'apple-touch-icon', href: '/icon168.png' }],
+    ['link', { rel: 'apple-touch-icon', href: '/icon-apple-touch.png' }],
   ],
   theme: '@vuepress/theme-blog',
   themeConfig: {
