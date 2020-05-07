@@ -5,6 +5,9 @@ module.exports = {
     ['link', { rel: 'icon', href: '/icon.png' }],
     ['link', { rel: 'manifest', href: '/manifest.webmanifest' }],
     ['meta', { name: 'theme-color', content: '#fff' }],
+    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }],
+    ['link', { rel: 'apple-touch-icon', href: '/icon168.png' }],
   ],
   theme: '@vuepress/theme-blog',
   themeConfig: {
