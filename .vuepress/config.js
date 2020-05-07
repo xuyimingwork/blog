@@ -1,5 +1,9 @@
 module.exports = {
   title: '会意',
+  head: [
+    ['link', { rel: 'icon', href: '/icon.png' }],
+    ['link', { rel: 'manifest', href: '/manifest.webmanifest' }]
+  ],
   theme: '@vuepress/theme-blog',
   themeConfig: {
     dateFormat: 'YYYY-MM-DD',
