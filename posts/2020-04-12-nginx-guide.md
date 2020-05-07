@@ -73,7 +73,7 @@ http {
 }
 ```
 
-通常，配置文件中会包含多个 `server` 块，他们通过监听的 `port` 不同以及不同的 [server names](http://nginx.org/en/docs/beginners_guide.html) 区别。一旦 nginx 确定请求由某个 server 处理，它会将请求头部的 URI 与 `server` 块内 `location` 指令的参数比对。
+通常，配置文件中会包含多个 `server` 块，他们通过监听的 `port` 不同以及不同的 [server names](http://nginx.org/en/docs/http/server_names.html) 区别。一旦 nginx 确定请求由某个 server 处理，它会将请求头部的 URI 与 `server` 块内 `location` 指令的参数比对。
 
 将下面的 `location` 块添加到 `server`
 
