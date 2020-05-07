@@ -3,6 +3,8 @@ module.exports = {
   head: [
     ['link', { rel: 'icon', href: '/icon.png' }],
     ['link', { rel: 'manifest', href: '/manifest.webmanifest' }]
+    ['meta', { name: 'Description', content: '每有会意 便欣然忘食' }],
+    ['meta', { name: 'theme-color', content: '#fff' }],
   ],
   theme: '@vuepress/theme-blog',
   themeConfig: {
