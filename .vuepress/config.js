@@ -33,7 +33,7 @@ module.exports = {
         },
       ]
     },
-    pwa: false
+    pwa: true
   },
   evergreen: true,
   markdown: {
