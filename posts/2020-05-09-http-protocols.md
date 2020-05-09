@@ -5,6 +5,13 @@ tags:
   - HTTP
 ---
 
+## Information Management: A Proposal
+
+Tim Berners-Lee 的论文，1990 年发表
+
+- [HTML](https://www.w3.org/History/1989/proposal.html)
+- [PDF](https://cds.cern.ch/record/369245/files/dd-89-001.pdf)
+
 ## Hypertext Transfer Protocol -- HTTP/1.1
 
 RFC 2616，1999 年发布
