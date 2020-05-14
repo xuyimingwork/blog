@@ -13,6 +13,10 @@ module.exports = {
     ['link', { rel: 'apple-touch-icon', sizes: '152x152', href: '/apple-touch-icon-152x152.png' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon-180x180.png' }],
   ],
+  plugins: ['@vuepress/pwa', {
+    serviceWorker: true,
+    updatePopup: true
+  }],
   theme: '@vuepress/theme-blog',
   themeConfig: {
     dateFormat: 'YYYY-MM-DD',
@@ -46,7 +50,7 @@ module.exports = {
         },
       ]
     },
-    pwa: true
+    // pwa: true
   },
   evergreen: true,
   markdown: {
