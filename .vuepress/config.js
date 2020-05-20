@@ -25,6 +25,11 @@ module.exports = {
         itemPermalink: '/post/:year-:month-:day/:slug',
       }
     ],
+    globalPagination: {
+      prevText:'上一页',
+      nextText:'下一页',
+      lengthPerPage: 5
+    },
     footer: {
       contact: [
         { type: 'github', link: 'https://github.com/xuyimingwork' },
@@ -41,5 +46,5 @@ module.exports = {
   evergreen: true,
   markdown: {
     lineNumbers: true
-  }
+  },
 }
