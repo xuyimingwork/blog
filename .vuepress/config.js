@@ -4,6 +4,11 @@ module.exports = {
   head: [
     ['link', { rel: 'icon', href: '/icon.png' }],
   ],
+  locales: {
+    '/': {
+      lang: 'zh-CN',
+    },
+  },
   theme: '@vuepress/theme-blog',
   themeConfig: {
     dateFormat: 'YYYY-MM-DD',
