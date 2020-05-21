@@ -42,6 +42,10 @@ module.exports = {
       ],
       copyright: [
         {
+          text: '闽公网安备 35030202000432号',
+          link: 'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=35030202000432',
+        },
+        {
           text: '闽ICP备20001517号-1',
           link: 'http://www.beian.miit.gov.cn',
         },
