@@ -19,10 +19,16 @@
     "@vuepress/theme-blog": "^2.2.0",
     "commitizen": "^4.0.4",
     "cz-conventional-changelog": "3.1.0",
+    "husky": "^4.2.5",
     "moment": "^2.24.0",
     "standard-version": "^8.0.0",
     "vuepress": "^1.4.0",
     "yargs": "^15.3.1"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
   },
   "config": {
     "commitizen": {
