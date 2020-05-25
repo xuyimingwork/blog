@@ -12,7 +12,3 @@ tags:
 ## 参见
 
 - [:last-of-type 伪类选择器](https://www.w3.org/TR/2018/REC-selectors-3-20181106/#last-of-type-pseudo)
-
-
-
-
