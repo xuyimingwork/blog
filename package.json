@@ -2,6 +2,7 @@
   "name": "blog",
   "version": "0.0.1",
   "repository": "git@github.com:xuyimingwork/blog.git",
+  "license": "MIT",
   "scripts": {
     "c": "yarn run create",
     "create": "yarn run new",
