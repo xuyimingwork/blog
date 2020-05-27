@@ -3,6 +3,7 @@ title: 实现一个玩具浏览器（一）构建 HTTP 请求并发送
 date: 2020-05-26T15:07:03
 tags:
   - 浏览器
+  - 实现一个玩具浏览器
 ---
 
 ## 前言
@@ -19,7 +20,7 @@ tags:
 
 ![](./images/00001.jpg)
 
-> 注：本系列及项目源自：[极客时间-前端进阶训练营-浏览器工作原理](https://u.geekbang.org/subject/fe/1000447)
+> 注：[本系列](/tag/实现一个玩具浏览器/) 及 [项目](https://github.com/xuyimingwork/toy-browser) 源自：[极客时间-前端进阶训练营-浏览器工作原理](https://u.geekbang.org/subject/fe/1000447)
 
 ## 先做个服务器
 
@@ -97,7 +98,7 @@ client.on('end', () => {
 
 ## 假装发送一个 HTTP 请求
 
-依据 HTTP 请求的格式，我们写一个假的请求如下：
+依据 [HTTP 请求的格式](https://tools.ietf.org/html/rfc2616#section-5)，我们写一个假的请求如下：
 
 ```js
 const client = net.createConnection({ 
@@ -132,9 +133,11 @@ client.on('end', () => {
 > 
 > [For compatibility with HTTP/1.0 applications, HTTP/1.1 requests containing a message-body MUST include a valid Content-Length header field unless the server is known to be HTTP/1.1 compliant. If a request contains a message-body and a Content-Length is not given, the server SHOULD respond with 400 (bad request) if it cannot determine the length of the message, or with 411 (length required) if it wishes to insist on receiving a valid Content-Length.](https://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.4)
 
+可以看到建立 TCP 连接后，只需要给 client 写入文本，就可以产生发送 HTTP 请求的效果。
+
 ## Request 的设计与初测试
 
-可以看到建立 TCP 连接后，只需要给 client 写入文本，就可以产生发送 HTTP 请求的效果。接着开始设计 `Request` 类。可以看到构建一个 HTTP 请求大概需要如下参数；
+接着设计 `Request` 类。从上面可以看到构建一个 HTTP 请求大概需要如下参数；
 
 - method
 - host
@@ -199,7 +202,9 @@ ${this.bodyText}`
 }
 ```
 
-在写 `send` 方法前，先打检测下 `toString` 是否正确。
+这里就是用模板字符串和参数构建出 HTTP 请求，注意 `\r`。
+
+在写 `send` 方法前，先检测下 `toString` 是否正确。
 
 ```js
 const request = new Request({
@@ -218,7 +223,7 @@ console.log(JSON.stringify(request.toString()))
 
 ![](./images/00004.png)
 
-符合预期，在 `server.js` 的首个 `console.log` 后新增一句 `console.log(req.headers);`，执行 `node server.js` 重启服务端，在客户端的 `Request` 中添加 headers，放到刚才的 `client` 中发送一下：
+符合预期。在 `server.js` 的首个 `console.log` 后新增一句 `console.log(req.headers);`，执行 `node server.js` 重启服务端，在客户端的 `Request` 中添加 headers，放到刚才的 `client` 中发送一下：
 
 ```js
 const client = net.createConnection({ 
@@ -247,7 +252,7 @@ const client = net.createConnection({
 
 ## 我要发送啦
 
-完成 `send` 方法。
+最后，完成 `send` 方法。
 
 ```js
 class Request {
