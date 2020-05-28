@@ -404,7 +404,7 @@ class ChunkedBodyParser {
 > 
 > 本玩具浏览器不处理这个编码问题。因此，暂时只支持 ASCII 字符
 
-### 服务端支持读取并返回 HTML
+## 服务端支持读取 HTML 文件
 
 修改服务端代码如下，支持读取 `index.html` 文件并返回
 
@@ -441,7 +441,7 @@ server.listen(8088)
 </html>
 ```
 
-### 测试，解析成功，撒花
+## 测试，解析成功，撒花
 
 `node server.js` 重启服务器，`node client.js` 访问，结果如下：
 
