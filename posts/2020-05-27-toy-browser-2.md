@@ -10,6 +10,9 @@ tags:
 
 上一节中 `Request` 已经可以依据参数构建并发送 HTTP 请求，本节处理响应。
 
+> - [系列博文](/tag/实现一个玩具浏览器/)
+> - [项目地址](https://github.com/xuyimingwork/toy-browser)
+
 ## 解析 data 面临的两个问题
 
 目前的 `data` 代码是这样的：

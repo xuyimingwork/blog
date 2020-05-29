@@ -20,7 +20,7 @@ tags:
 
 ![](./images/00001.jpg)
 
-> 注：[本系列](/tag/实现一个玩具浏览器/) 及 [项目](https://github.com/xuyimingwork/toy-browser) 源自：[极客时间-前端进阶训练营-浏览器工作原理](https://u.geekbang.org/subject/fe/1000447)
+> 注：[本系列](/tag/实现一个玩具浏览器/) 及 [项目](https://github.com/xuyimingwork/toy-browser) 源自：[Winter-浏览器工作原理](https://u.geekbang.org/subject/fe/1000447)
 
 ## 先做个服务器
 
