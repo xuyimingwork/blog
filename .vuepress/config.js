@@ -33,7 +33,7 @@ module.exports = {
     globalPagination: {
       prevText:'上一页',
       nextText:'下一页',
-      lengthPerPage: 5
+      lengthPerPage: 10
     },
     footer: {
       contact: [
