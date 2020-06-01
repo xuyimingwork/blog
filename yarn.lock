@@ -945,6 +945,22 @@
     "@vssue/utils" "^1.4.0"
     axios "^0.18.1"
 
+"@vssue/api-github-v3@^1.4.4":
+  version "1.4.4"
+  resolved "https://registry.npm.taobao.org/@vssue/api-github-v3/download/@vssue/api-github-v3-1.4.4.tgz#e32ed6d5910bb87c327de8576c107ee7e53bb6db"
+  integrity sha1-4y7W1ZELuHwyfehXbBB+5+U7tts=
+  dependencies:
+    "@vssue/utils" "^1.4.0"
+    axios "^0.18.1"
+
+"@vssue/api-github-v4@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.npm.taobao.org/@vssue/api-github-v4/download/@vssue/api-github-v4-1.4.0.tgz#30defd2220ff50e5ed4c50159e42eba52b004748"
+  integrity sha1-MN79IiD/UOXtTFAVnkLrpSsAR0g=
+  dependencies:
+    "@vssue/utils" "^1.4.0"
+    axios "^0.18.1"
+
 "@vssue/utils@^1.4.0":
   version "1.4.0"
   resolved "https://registry.npm.taobao.org/@vssue/utils/download/@vssue/utils-1.4.0.tgz#3cc2fd8492a3409e343289981e2209b6ca2f8313"
@@ -959,6 +975,13 @@
   integrity sha1-N72webdQ6ZhZHrlLHpQ3TAEhwic=
   dependencies:
     vssue "^1.4.3"
+
+"@vssue/vuepress-plugin-vssue@^1.4.6":
+  version "1.4.6"
+  resolved "https://registry.npm.taobao.org/@vssue/vuepress-plugin-vssue/download/@vssue/vuepress-plugin-vssue-1.4.6.tgz#0a231095f58b29bbd64c9ea964fa73add909ccfd"
+  integrity sha1-CiMQlfWLKbvWTJ6pZPpzrdkJzP0=
+  dependencies:
+    vssue "^1.4.6"
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
@@ -9287,6 +9310,17 @@ vssue@^1.4.3:
   version "1.4.3"
   resolved "https://registry.npm.taobao.org/vssue/download/vssue-1.4.3.tgz#861203a95e6b60fe2af661a07d800c0d51965e13"
   integrity sha1-hhIDqV5rYP4q9mGgfYAMDVGWXhM=
+  dependencies:
+    "@vssue/utils" "^1.4.0"
+    github-markdown-css "^3.0.1"
+    vue "^2.6.10"
+    vue-i18n "^8.11.2"
+    vue-property-decorator "^8.1.1"
+
+vssue@^1.4.6:
+  version "1.4.6"
+  resolved "https://registry.npm.taobao.org/vssue/download/vssue-1.4.6.tgz#2ce16373907dc04bb92d6908224f0dd7239454f6"
+  integrity sha1-LOFjc5B9wEu5LWkIIk8N1yOUVPY=
   dependencies:
     "@vssue/utils" "^1.4.0"
     github-markdown-css "^3.0.1"

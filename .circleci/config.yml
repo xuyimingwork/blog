@@ -42,7 +42,7 @@ jobs:
           at: ~/project
       
       - run:
-          name: 'Run tests'
+          name: 'Run build'
           command: yarn build
       
       - persist_to_workspace:

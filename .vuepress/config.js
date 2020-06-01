@@ -1,3 +1,4 @@
+console.log('env github', process.env.GITHUB_CLIENT_ID, process.env.GITHUB_CLIENT_SECRET)
 module.exports = {
   title: '会意',
   description: '每有会意 便欣然忘食',
@@ -51,6 +52,14 @@ module.exports = {
         },
       ]
     },
+    comment: {
+      service: 'vssue',
+      platform: 'github-v4',
+      owner: 'xuyimingwork',
+      repo: 'blog', 
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    }
   },
   evergreen: true,
   markdown: {
