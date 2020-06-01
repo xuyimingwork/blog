@@ -1,4 +1,3 @@
-console.log('env github', process.env.GITHUB_CLIENT_ID, process.env.GITHUB_CLIENT_SECRET)
 module.exports = {
   title: '会意',
   description: '每有会意 便欣然忘食',
