@@ -12,6 +12,9 @@ tags:
 
 经过布局，已经拿到了元素的位置信息，本节要做的就是将元素画出来。其实这节并没有什么东西，主要是用一个库来绘制页面，但终于走到这一步，还是比较激动的。
 
+> - [系列博文](/tag/实现一个玩具浏览器/)
+> - [项目地址](https://github.com/xuyimingwork/toy-browser)
+
 ## 准备
 
 主要是用 [images](https://www.npmjs.com/package/images) 完成最后的渲染工作。可以先看下如何使用这个库。

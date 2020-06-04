@@ -10,6 +10,9 @@ tags:
 
 上一节完成了 flex 布局计算前的准备。本节将完成 flex 布局下各元素位置的计算。
 
+> - [系列博文](/tag/实现一个玩具浏览器/)
+> - [项目地址](https://github.com/xuyimingwork/toy-browser)
+
 ## 抽象主轴与交叉轴属性
 
 flex 有个主轴与交叉轴的概念。
