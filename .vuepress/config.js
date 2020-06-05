@@ -3,6 +3,7 @@ module.exports = {
   description: '每有会意 便欣然忘食',
   head: [
     ['link', { rel: 'icon', href: '/icon.png' }],
+    ['meta', { name: 'author', content: '徐一鸣' }]
   ],
   locales: {
     '/': {
