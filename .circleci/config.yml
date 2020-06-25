@@ -49,13 +49,13 @@ jobs:
           root: ~/project
           paths:
             - .vuepress/dist
-
+  
   #------------------------------------------------------------
   # 3. 部署
   #------------------------------------------------------------
   deploy:
-    machine:
-      enabled: true
+    docker:
+      - image: instrumentisto/rsync-ssh:latest
     steps:
       - attach_workspace:
           at: ~/project
@@ -63,13 +63,11 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "65:b3:e1:50:05:82:37:0a:a5:ae:33:ea:0e:ad:63:c3"
-    
+      
       - run:
-          name: Deploy Over SSH
+          name: Deploy Over Rsync
           command: |
-            tar -czvf .vuepress/blog.tar.gz --directory=.vuepress dist
-            scp -p .vuepress/blog.tar.gz $SSH_DEPLOY_USER@$SSH_HOST:/data/temp
-            ssh $SSH_DEPLOY_USER@$SSH_HOST "rm -rf /data/blog/*; tar -xvf /data/temp/blog.tar.gz --strip-components=1 -C /data/blog/"
+            rsync -az --progress --delete-after -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" .vuepress/dist/ $SSH_DEPLOY_USER@$SSH_HOST:/data/blog
 
 workflows:
   build:
