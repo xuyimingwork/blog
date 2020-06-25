@@ -101,6 +101,7 @@ workflows:
       - deploy-rsync:
           requires:
             - build
+          context: deploy
       - deploy:
           requires:
             - build
