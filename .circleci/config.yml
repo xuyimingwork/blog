@@ -49,6 +49,25 @@ jobs:
           root: ~/project
           paths:
             - .vuepress/dist
+  
+  #------------------------------------------------------------
+  # 2.5 增量部署
+  #------------------------------------------------------------
+  deploy-rsync:
+    docker:
+      - image: instrumentisto/rsync-ssh:latest
+    steps:
+      - attach_workspace:
+          at: ~/project
+
+      - add_ssh_keys:
+          fingerprints:
+            - "65:b3:e1:50:05:82:37:0a:a5:ae:33:ea:0e:ad:63:c3"
+      
+      - run:
+          name: Deploy Over Rsync
+          command: |
+            rsync --help
 
   #------------------------------------------------------------
   # 3. 部署
@@ -78,6 +97,9 @@ workflows:
       - build:
           requires:
             - install-dependencies
+      - deploy-rsync:
+          requires:
+            - build
       - deploy:
           requires:
             - build
