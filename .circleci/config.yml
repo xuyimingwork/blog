@@ -67,7 +67,8 @@ jobs:
       - run:
           name: Deploy Over Rsync
           command: |
-            rsync --help
+            ls -hl .vuepress/dist
+            rsync -a .vuepress/dist $SSH_DEPLOY_USER@$SSH_HOST:/data/temp/rsync
 
   #------------------------------------------------------------
   # 3. 部署
