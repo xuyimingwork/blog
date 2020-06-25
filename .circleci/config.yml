@@ -68,7 +68,7 @@ jobs:
           name: Deploy Over Rsync
           command: |
             ls -hl .vuepress/dist
-            rsync -az --progress --delete-after -e ssh .vuepress/dist/ $SSH_DEPLOY_USER@$SSH_HOST:/data/temp/rsync
+            rsync -az --progress --delete-after -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" .vuepress/dist/ $SSH_DEPLOY_USER@$SSH_HOST:/data/temp/rsync
 
   #------------------------------------------------------------
   # 3. 部署
