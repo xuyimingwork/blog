@@ -127,13 +127,13 @@ Object.keys(data).forEach(function defineReactive(key) {
 - 将 `data.price` 与 `data.quentity` 相乘
 - 将上一步的计算结果赋值给 `total`
 
-注意到**读取**操作，我们知道**读取**操作会通过 `defineProperty` 的 `get` 方法，因此，如果能在 `get` 时保存正在执行的计算过程（这里是：`total = data.price * data.quentity`），就可以建立变量与计算过程的关联。
+注意到**读取**操作，我们知道**读取**操作会通过 `defineProperty` 的 `get` 方法，因此，如果能在 `get` 时收集正在执行的计算过程（这里是：`total = data.price * data.quentity`），就可以建立变量与计算过程的关联。
 
 同时，需要在首次执行 `total = data.price * data.quentity` 时就能触发 `get` 进行关联；且后续执行时不触发。
 
-```js
-let target = null
+这里通过 `target` 变量临时持有计算过程，首次触发后置空。
 
+```js
 const data = {
   price: 5,
   quentity: 2
@@ -160,6 +160,7 @@ Object.keys(data).forEach(function defineReactive(key) {
   })
 })
 
+let target = null
 target = main
 main()
 target = null
@@ -169,4 +170,235 @@ target = null
 
 ## Vue 中的代码组织方式
 
-TODO: 未完待续
+代码的组织方式相当于把代码的各部分内容拆到不同函数或类中，使结构更加清晰，更易维护。上面的原型代码显然不是 Vue 中代码的组织方式，实际上，Vue 源码中响应式系统相关的功能位于 `src/core/observer/` 文件夹下。这里主要涉及该文件夹下的 `index.js`、`dep.js`、`watcher.js`
+
+### 划分输入与系统内部
+
+针对原型代码，输入是什么？显然，输入是
+
+```js
+const data = {
+  price: 5,
+  quentity: 2
+}
+let total
+
+function main() {
+  total = data.price * data.quentity
+}
+```
+
+系统内部则是后半部分的代码，又可以分为两个部分
+
+- 数据前期准备，需要先把数据定义成响应式，才能在首次执行时通过数据收集计算过程
+
+```js
+Object.keys(data).forEach(function defineReactive(key) {
+  let value = data[key]
+  let cb = null
+  Object.defineProperty(data, key, {
+    get: function() {
+      if (target) cb = target
+      return value
+    },
+    set: function(newValue) {
+      if (value === newValue) return
+      value = newValue
+      if (cb) cb()
+    }
+  })
+})
+```
+
+说明系统需要提供一个函数用于建立数据前期准备
+
+- 计算过程的首次执行
+
+```js
+let target = null
+target = main
+main()
+target = null
+```
+
+说明系统需要提供一个函数用于控制 main 的执行时机
+
+接下来划分变量与计算过程，同时用两个类来承担变量与计算过程各自的功能。
+
+### 变量与计算过程的关系
+
+它们有两个关系
+
+- 变量变化时需要通知计算过程
+- 计算过程依赖变量
+
+这里就非常适合应用观察者模式，变量是观察对象，计算过程是观察者。又由于变量是计算过程的依赖物，因此对它们相应的类命名为
+
+- `Dep` 类对应变量，主要职责是维护对应的计算过程（添加、删除），当变量发生变化时通知相应计算过程
+- `Watcher` 类对应计算过程，主要职责一是让用户控制首次执行的时机，二是当 `Dep` 通知时再次执行
+
+```js
+class Dep {
+  static target
+
+  constructor() {
+    this.subs = []
+  }
+
+  addSub(watcher) {
+    this.subs.push(watcher)
+  }
+
+  notify() {
+    this.subs.forEach(watcher => watcher.update())
+  }
+}
+
+Dep.target = null
+```
+
+```js
+class Watcher {
+  constructor(cb) {
+    this.cb = cb
+    this.get()
+  }
+
+  get() {
+    Dep.target = this
+    this.cb()
+    Dep.target = null
+  }
+
+  update() {
+    this.cb()
+  }
+}
+```
+
+### 处理变量的响应式
+
+首先，每个对象类型的数据对应一个 `Observer` 类，职责是将对象类型的各个属性转为响应式。
+
+```js
+class Observer {
+  constructor (data) {
+    this.data = data
+    this.walk(data)
+  }
+
+  walk (obj) {
+    const keys = Object.keys(obj)
+    for (let i = 0; i < keys.length; i++) {
+      defineReactive(obj, keys[i])
+    }
+  }
+}
+```
+
+接着更改 `defineReactive`，对传入的对象进行处理
+
+```js
+function defineReactive(obj, key) {
+  let value = obj[key]
+  const dep = new Dep()
+  Object.defineProperty(obj, key, {
+    get: function() {
+      if (Dep.target) dep.addSub(Dep.target)
+      return value
+    },
+    set: function(newValue) {
+      if (value === newValue) return
+      value = newValue
+      dep.notify()
+    }
+  })
+}
+```
+
+### 改造完成
+
+```js
+class Dep {
+  static target
+
+  constructor() {
+    this.subs = []
+  }
+
+  addSub(watcher) {
+    this.subs.push(watcher)
+  }
+
+  notify() {
+    this.subs.forEach(watcher => watcher.update())
+  }
+}
+
+Dep.target = null
+
+class Watcher {
+  constructor(cb) {
+    this.cb = cb
+    this.get()
+  }
+
+  get() {
+    Dep.target = this
+    this.cb()
+    Dep.target = null
+  }
+
+  update() {
+    this.cb()
+  }
+}
+
+class Observer {
+  constructor (data) {
+    this.data = data
+    this.walk(data)
+  }
+
+  walk (obj) {
+    const keys = Object.keys(obj)
+    for (let i = 0; i < keys.length; i++) {
+      defineReactive(obj, keys[i])
+    }
+  }
+}
+
+function defineReactive(obj, key) {
+  let value = obj[key]
+  const dep = new Dep()
+  Object.defineProperty(obj, key, {
+    get: function() {
+      if (Dep.target) dep.addSub(Dep.target)
+      return value
+    },
+    set: function(newValue) {
+      if (value === newValue) return
+      value = newValue
+      dep.notify()
+    }
+  })
+}
+
+const data = {
+  price: 5,
+  quentity: 2
+}
+
+let total
+
+function main() {
+  total = data.price * data.quentity
+}
+
+new Observer(data)
+new Watcher(main)
+```
+
+## 小结
+
+本节实现了一个微型的响应式系统并将它以 Vue 源码中的组织方式进行了重构，把各部分拆分到各个类后，即可添加对应的功能。比如 `data` 为数组类型时，就可以在 `Observer` 中进行处理；若 `data` 的某个属性为对象类型，就可以在 `defineReactive` 中对该子对象调用 `new Observer()`
