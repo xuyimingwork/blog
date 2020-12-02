@@ -22,7 +22,7 @@
     "cz-conventional-changelog": "3.1.0",
     "husky": "^4.2.5",
     "moment": "^2.24.0",
-    "standard-version": "^8.0.0",
+    "standard-version": "^8.0.1",
     "vuepress": "^1.4.0",
     "yargs": "^15.3.1"
   },
