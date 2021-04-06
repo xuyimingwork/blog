@@ -31,7 +31,7 @@ CSS 是一门描述结构化文档（如：HTML、XML）在屏幕、纸张等媒
 
 - **Working Draft(WD)**
   
-  W3C 标准的设计节点
+  W3C 标准的设计阶段
 
 - **Candidate Recommendation (CR)**
   
