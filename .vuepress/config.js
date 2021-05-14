@@ -48,7 +48,7 @@ module.exports = {
         },
         {
           text: '闽ICP备20001517号-1',
-          link: 'http://www.beian.miit.gov.cn',
+          link: 'https://beian.miit.gov.cn',
         },
       ]
     },
