@@ -4,7 +4,6 @@ date: 2021-04-06T20:24:48
 tags:
   - CSS
 ---
-
 ## 介绍分页媒体（paged media）
 
 页式媒体（如：纸张、幻灯片、屏幕中展示的纸张等）不同于[连续性媒体](https://www.w3.org/TR/CSS2/media.html#continuous-media-group)，其内容分布在独立的各页面中。
@@ -40,7 +39,7 @@ page selector 指定声明在哪些页面中生效。在 CSS 2.1 中，可以指
 
 CSS 2.1 的 [page context](https://www.w3.org/TR/CSS2/page.html#page-context) 只允许 [margin properties](https://www.w3.org/TR/CSS2/box.html#margin-properties)（'margin-top', 'margin-right', 'margin-bottom', 'margin-left', and 'margin'），下图展示了 sheet、page box、page margin 间的关系
 
-![](https://www.w3.org/TR/CSS2/images/page-info.png)
+![page info](https://www.w3.org/TR/CSS2/images/page-info.png)
 
 下面是一个设置所有 page 所有边距的小例子：
 
@@ -103,8 +102,108 @@ page context 中没有字体的概念，因此不允许 'em' 与 'ex' 单位。�
 
 ## page breaks
 
-五个属性指明用户代理可以或应该 break page，以及在什么页面（左或右）继续随后的内容。每个 page break 结束当前 page box 的布局并将文档树的剩余部分在新的 page box 中重新布局。
+五个属性指明用户代理可以或应该在内容的何处进行分页（分页点），以及后续内容在什么页面（左或右）继续。每个分页点（page break）结束当前 page box 的布局并将文档树的剩余部分在新的 page box 中重新布局。
 
-### 
+### 分页属性 `'page-break-before'`、`'page-break-after'`、`'page-break-inside'`
 
+- `'page-break-before'`
+  - 值：auto | always | avoid | left | right | inherit
+  - 初始值：auto
+  - 适用于：块级元素
+  - 是否继承：否
+  - 百分数：不适用
+  - 媒体：可视、分页
+  - 计算值：按指定值
 
+- `'page-break-after'`
+  - 值：auto | always | avoid | left | right | inherit
+  - 初始值：auto
+  - 适用于：块级元素
+  - 是否继承：否
+  - 百分数：不适用
+  - 媒体：可视、分页
+  - 计算值：按指定值
+
+- `'page-break-after'`
+  - 值：avoid | auto | inherit
+  - 初始值：auto
+  - 适用于：块级元素
+  - 是否继承：否
+  - 百分数：不适用
+  - 媒体：可视、分页
+  - 计算值：按指定值
+
+某些属性值意义如下：
+
+- **auto** 既不强制也不禁止在生成的盒前（后、内）进行分页
+- **always** 总是强制在生成的盒前（后）进行分页
+- **avoid** 避免在生成的盒前（后、内）进行分页
+- **left** 强制一或两页在生成的盒前（后）分页，使下一页为左侧页
+- **right** 强制一或两页在生成的盒前（后）分页，使下一页为右侧页
+
+允许浏览器将 **left** 和 **right** 视为 **always**
+
+分页点位置通常受父元素的 `'page-break-inside'` 属性、之前元素的 `'page-break-after'` 属性、以及后续元素的 `'page-break-before'` 属性影响。当这些属性的值不是 `auto` 时，`always`、`left`、`right` 优先级比 `avoid` 更高
+
+浏览器需要将这些属性运用到根元素正常流内的块级元素上，当然也可以将这些属性运用到其它元素上，如 `'table-row'` 元素
+
+当一个盒被分页点分开，在分开处盒的外边距、边界、内边距不应有可见的影响
+
+### 在元素内分页 `'orphans'`、`'widows'`
+
+- `'orphans'`
+  - 值：\<integer\> | inherit
+  - 初始值：2
+  - 适用于：块级容器元素
+  - 是否继承：是
+  - 百分数：不适用
+  - 媒体：可视、分页
+  - 计算值：按指定值
+
+- `'widows'`
+  - 值：\<integer\> | inherit
+  - 初始值：2
+  - 适用于：块级容器元素
+  - 是否继承：是
+  - 百分数：不适用
+  - 媒体：可视、分页
+  - 计算值：按指定值
+
+`'orphans'` 属性定义了页面底部的块级容器内至少需要保留几行。`'widows'` 属性定义了页面顶部的块级容器内至少需要保留几行。
+
+只允许正数。
+
+### 允许的分页点
+
+在正常流中，页面的分页点可以出现在如下位置：
+
+1. 在块级盒垂直方向间的外边距中。当此处发生非强制分页，则 `'margin-top'` 与 `'margin-bottom'` 属性将置为 0。当此处发生强制分页，则 `'margin-bottom'` 属性为 0，`'margin-top'` 可能置为 0 或保留
+2. 在块级容器盒内的行盒间
+3. 在块级容器盒的内容边缘与子内容外边缘间，如果它们间存在非 0 间隙
+
+这些分页点遵循如下规则：
+
+- 规则A：对于 1，仅在元素的 `'page-break-after'` 和 `'page-break-before'` 值为 always | left | right | auto 时
+- 规则B：但是，如果所有均为 auto 且父元素的 `'page-break-inside'` 为 `'avoid'`，则不许作为分页点
+- 规则C：对于 2，需要满足 `'orphans'` 与 `'windows'` 的配置
+- 规则D：2、3 只在自身与所有父元素的 `'page-break-inside'` 属性值均为 `'auto'` 时生效
+
+如果上述规则未能提供足够的分页点，则忽略 A、B、D 规则以找到更多分页点
+
+若仍未找到足够的分页点，则忽略 C 规则
+
+### 强制的分页点
+
+若 `'page-break-after'` 和 `'page-break-before'` 值为 always | left | right 时，强制插入分页
+
+### 最佳的分页点
+
+CSS 2.1 并没有任何强制规范浏览器必须如何做，但建议：
+
+- 分页点尽可能少
+- 除了强制分页点外，其它页面尽可能有相同的高度
+- 避免在可替换元素内分页
+
+### 分页中的级联规则
+
+与正常的 CSS 声明一致
